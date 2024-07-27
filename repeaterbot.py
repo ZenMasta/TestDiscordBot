@@ -6,9 +6,9 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-## CHANNEL_A_ID = 880432552404467733  # Trading-Floor
-CHANNEL_A_ID = 1062230790026580028  #  Market News
-CHANNEL_B_ID = 879427114338779136  # Stax-Chat
+
+CHANNEL_A_ID = YOURCHANNELID  # Name of Channel A
+CHANNEL_B_ID = YOURCHANNELID  # Name of Channel B
 
 @bot.event
 async def on_ready():
@@ -16,10 +16,14 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    print(f'Message from {message.author} in channel {message.channel.id}: {message.content}')
     if message.channel.id == CHANNEL_A_ID:
         channel_b = bot.get_channel(CHANNEL_B_ID)
         if channel_b:
             await channel_b.send(message.content)
+            print(f'Message sent to Channel B: {message.content}')
+        else:
+            print('Channel B not found')
 
     await bot.process_commands(message)
 
